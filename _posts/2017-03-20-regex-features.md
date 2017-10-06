@@ -73,7 +73,7 @@ The dataset consists of ~1800 8x8 grayscale images, which I binarized.
 
 Here are the first 10 images in the dataset (top row) alongside the binarized versions (bottom row):
 
-![10 examples from the digit dataset](img/digits-1.png)
+![10 examples from the digit dataset]({{ site.baseurl }}/images/digits-1.png)
 
 ## Results
 
@@ -120,7 +120,7 @@ So what was the EA learning? The 10 highest-fitness regexes (across all generati
 
 We can visualize what these regexes are matching by plotting the first 10 images in the dataset and highlighting the match locations. In this image, each row corresponds to one of the top-10 regexes above:
 
-![10 examples from the digit dataset](img/digits-2.png)
+![10 examples from the digit dataset]({{ site.baseurl }}/images/digits-2.png)
 
 Notice that three of the regexes don't match any of the first 10 images from the dataset.
 
