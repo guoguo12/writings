@@ -15,6 +15,8 @@ For example, `(+ 1 2)` evaluates to 3, as does `(- (+ 4 1) 2)`.
 We say an expression like this is written in **prefix notation**.
 If you've worked in Lisp before, you know what this is.
 
+<!-- more -->
+
 The typical process of parsing prefix notation involves breaking the input into tokens, assembling an abstract syntax tree (AST), then evaluating using recursion. This works very well, and can easily be extended to include more powerful Lisp-y features like environments and mutation.
 
 Peter Norvig's classic ["How to Write a Lisp Interpreter in Python"](http://norvig.com/lispy.html) uses this method. The main parsing procedure converts an expression into a nested list:

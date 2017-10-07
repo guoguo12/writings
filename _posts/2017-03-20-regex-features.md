@@ -13,6 +13,8 @@ A few days ago when the question first popped into my head, my guess was: *proba
 
 After Googling for similar ideas and coming up empty-handed, I decided to give it a shot. I chose to tackle a known "easy" problem: classifying images of handwritten digits. If the method worked for digit classification, I could then adapt it to more complex scenarios.
 
+<!-- more -->
+
 ## Problem description
 
 I started by defining a simple featurization process:
