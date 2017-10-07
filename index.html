@@ -3,16 +3,14 @@ layout: default
 ---
 
 <div class="posts">
+  <ul style="list-style-type: none">
   {% for post in site.posts %}
-    <article class="post">
-
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
-
-      <div class="entry">
-        {{ post.excerpt }}
-      </div>
-
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-    </article>
+  <li style="margin-top: 20px; margin-bottom: 20px">
+    <a href="{{ site.baseurl }}{{ post.url }}">
+      {{ post.title }}
+      <span style="float: right; color: gray">{{ post.date | date: "%B %e, %Y" }}</span>
+    </a>
+  </li>
   {% endfor %}
+  </ul>
 </div>
