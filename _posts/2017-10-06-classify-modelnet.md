@@ -3,6 +3,10 @@ layout: post
 title: Classifying 3D Shapes using Keras on FloydHub
 ---
 
+_(Note: I originally wrote this article in June 2017. At the time, FloydHub's introductory offer was 100 hours of free GPU time.
+I added FloydHub to the article so that people without access to GPUs could run the experiment.
+Since their new free tier only includes CPU time, you'll need to find access to a GPU on your own.)_
+
 In this tutorial, we'll train a 3D convolutional neural network (CNN) to classify CAD models of real-world objects.
 
 <!-- The reference code/data for this tutorial can be found [on GitHub](https://github.com/guoguo12/modelnet-cnn).] -->
@@ -15,22 +19,21 @@ If you've never used it before, read ["30 seconds to Keras"](https://keras.io/#g
 
 When we finish our Keras code, we'll run it on FloydHub, an up-and-coming platform for running deep learning experiments in the cloud.
 
-But first, let's meet the dataset.
 <!-- [right float box? - Surprise, it's a peephole connection! If you're *only* interested in FloydHub, download [the reference code and data](TODO) and skip to the "Training on FloydHub" section below.] -->
 
 ## About the data
 
-We'll be using [ModelNet10](http://modelnet.cs.princeton.edu/), from [Princeton's Vision and Robotics Group](http://3dvision.princeton.edu/). Modelnet10 contains 4,899 CAD models across 10 categories of common household objects: bathtubs, dressers, toilets, etc. Each example is given as a [OFF file](https://en.wikipedia.org/wiki/OFF_(file_format)), but the standard approach is to discretize each CAD model into a 30 x 30 x 30 grid of *[voxels](https://en.wikipedia.org/wiki/Voxel)*, or volumetric pixels&mdash;think Minecraft.
+We'll be using [ModelNet10](http://modelnet.cs.princeton.edu/), from the [Princeton Vision and Robotics Group](http://3dvision.princeton.edu/). ModelNet10 contains 4,899 CAD models across 10 categories of common household objects: bathtubs, dressers, toilets, etc. Each example is given as a [OFF file](https://en.wikipedia.org/wiki/OFF_(file_format)), but the standard approach is to discretize each CAD model into a 30 x 30 x 30 grid of *[voxels](https://en.wikipedia.org/wiki/Voxel)*, or volumetric pixels&mdash;think Minecraft.
 
 The data is already split into a training set (of size 3,991) and a test set (of size 908).
 
-The ModelNet website showcases a leaderboard of current best results on ModelNet10. We'll be using the neural network architecture presented in [Paper #14](https://arxiv.org/abs/1612.04774) by Xu and Todorovic. Their reported result: 88% classification accuracy.
+The ModelNet website showcases a leaderboard of current best results on ModelNet10. We'll be using the neural network architecture presented in [this paper](https://arxiv.org/abs/1612.04774) by Xu and Todorovic. Their reported result: 88% classification accuracy.
 
 We'll first need to download the data and voxelize it. If you'd like to skip to training the neural net, you can download the data [here](https://github.com/guoguo12/modelnet-cnn/tree/master/data) (2 MB).
 
 ## Data prep
 
-The Xu and Todorovic paper describes the exact format of the ModelNet10 data:
+The Xu and Todorovic paper describes how we should discretize the ModelNet10 data:
 
 <blockquote>
 Each shape is represented as a set of binary indicators corresponding to 3D voxels of a uniform 3D grid centered on the shape. The indicators take value 1 if the corresponding 3D voxels are occupied by the 3D shape; and 0, otherwise. Hence, each 3D shape is represented by a binary three-dimensional tensor. The grid size is set to 30 × 30 × 30 voxels. The shape size is normalized such that a cube of 24 × 24 × 24 voxels fully contains the shape, and the remaining empty voxels serve for padding in all directions around the shape.
@@ -50,7 +53,7 @@ Take a look around! The directory structure should be self-explanatory.
 
 ### Voxelize
 
-Next, we'll use [binvox](www.patrickmin.com/binvox/) to voxelize the CAD models. Download the binvox executable for your OS and put it somewhere in your PATH. Then:
+Next, we'll use [binvox](http://www.patrickmin.com/binvox/) to voxelize the CAD models. Download the binvox executable for your OS and put it somewhere in your PATH. Then:
 
 ```bash
 for f in ModelNet10/*/*/*.off; do binvox -d 24 -cb $f; done
@@ -60,9 +63,7 @@ for f in ModelNet10/*/*/*.off; do binvox -d 24 -cb $f; done
 
 The `-d 24` tells binvox to output a 24 x 24 x 24 voxel grid. The `-cb` tells it to center the shape in the grid.
 
-Give this command some time to run. You will likely see pop-up windows flicker into and out of existence, rendering your computer unusable. Go take a walk or something.
-
-When the command finishes, you should have 4,899 `.binvox` files:
+Give this command some time to run. You may see pop-up windows flicker into and out of existence. When it's done, you should have 4,899 `.binvox` files:
 
 ```bash
 $ find ModelNet10/ -type f -name '*.binvox' | wc -l
@@ -109,8 +110,6 @@ np.savez_compressed('modelnet10.npz',
                     y_train=y['train'],
                     y_test=y['test'])
 ```
-
-Phew! Don't worry, that was the most tedious part of this tutorial. Now we can get on with the interesting part, namely...
 
 ## Graph construction and training
 
@@ -186,37 +185,37 @@ print('Confusion matrix:\n{}'.format(conf))
 print('Average per-class accuracy: {:.3f}'.format(avg_per_class_acc))
 ```
 
-The complete code is [here](https://github.com/guoguo12/modelnet-cnn/blob/master/src/main.py). Try it out! If you're lucky enough to have access to GPUs, you should be able to run this code without any hassle. You should get around 86% average per-class accuracy.
-
-If you're stuck with CPUs, the code will run slowly or not at all. Fear not, we have an alternative, namely...
+The complete code is [here](https://github.com/guoguo12/modelnet-cnn/blob/master/src/main.py). Try it out! You should get around 86% average per-class accuracy.
 
 ## Training on FloydHub
 
-FloydHub is YC-backed startup specializing in ML infrastructure and deployment. A self-proclaimed "Heroku for deep learning", FloydHub lets you launch jobs using a slick command-line interface and monitor your jobs using an equally slick web UI. They also have a generous introductory promo: 100 hours of GPU training for free.
+FloydHub is YC-backed startup specializing in ML infrastructure and deployment. A self-proclaimed "Heroku for deep learning", FloydHub lets you launch jobs from the command-line and then monitor them through a web UI.
 
-To start, follow the first three steps [here](http://docs.floydhub.com/home/getting_started/) to install the Floyd CLI, create an account, and log into the CLI.
+To start, [create a FloydHub account](https://www.floydhub.com/login), [install the CLI](https://docs.floydhub.com/guides/basics/install/), and [log into the CLI](https://docs.floydhub.com/guides/basics/login/).
 
-Next, we'll upload the dataset to FloydHub. Move the `modelnet10.npz` file into its own directory. (If you're using the [reference code](https://github.com/guoguo12/modelnet-cnn/), this has already been done for you: you'll find the file under `data/`.) Then `cd` into the directory and run the following:
+To upload the ModelNet data to FloydHub, [create a new dataset](https://www.floydhub.com/datasets) called `modelnet` on the FloydHub website.
+Move the `modelnet10.npz` file into its own directory. (If you're using the [reference code](https://github.com/guoguo12/modelnet-cnn/), this has already been done for you: you'll find the file under `data/`.) Then `cd` into the directory and run the following:
 
 ```bash
 floyd data init modelnet
 floyd data upload
 ```
 
-Run `floyd data status` to check that the dataset was uploaded successfully. Note the ID of the dataset.
+Run `floyd data status` to check that the dataset was uploaded successfully.
 
-Next, move the training script (`main.py`) into its own directory (`src/`). Then `cd` into the directory and run
+Next, [create a new project](http://www.floydhub.com/projects) called `classify-modelnet`. Move the training script (`main.py`) into its own directory (`src/`). Then `cd` into the directory and run
 
 ```bash
 floyd init classify-modelnet
-floyd run --env keras --gpu --data [dataset-id] "python main.py /input/modelnet10.npz /output"
+floyd run --env keras --gpu --data [dataset-name] \
+    "python main.py /input/modelnet10.npz /output"
 ```
 
-Be sure to replace `[dataset-id]` with the ID of ModelNet dataset. It should look something like `eo4LZmQVs9JMwW6xB8hta5`. (You can't just use the short name, `modelnet`.)
+Be sure to replace `[dataset-name]` with the full name of the ModelNet dataset. It should look something like `[username]/datasets/modelnet/1`. (You can't just use the short name, `modelnet`.)
 
-Your job should now be either queued or running. After it starts running, you can view the output using `floyd logs -t [job-id]`. You can also monitor the job at the [FloydHub website](https://www.floydhub.com), although you won't be able to see the full output.
+Your job should now be either queued or running. After it starts running, you can view the output using `floyd logs -t [job-name]`. You can also monitor the job at the [FloydHub website](https://www.floydhub.com).
 
-At the end of the output, you should see the confusion matrix and average per-class accuracy for the test set:
+When the job finishes, you should see the confusion matrix and average per-class accuracy for the test set:
 
 ```
 2017-05-26 05:27:18,497 INFO - 
