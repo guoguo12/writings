@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Image Classification with Regex-based Features
+thanks: Alvin Wan
 ---
 
 Can regular expressions be used to featurize images for classification?
@@ -143,7 +144,3 @@ Rather than counting the number of matches throughout an entire image, we should
 The code for this experiment can be found on [GitHub](https://github.com/guoguo12/deap-regex-featurization).
 
 *Update (3/21/17):* I ran a new experiment where I counted the number of matches per row. See GitHub for results.
-
-<hr>
-
-Thanks to Alvin Wan for reading a draft of this.

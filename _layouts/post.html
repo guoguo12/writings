@@ -9,8 +9,18 @@ layout: default
     {{ content }}
   </div>
 
+  <hr style="margin-top: 20px; margin-bottom: 20px">
+
+  {% if page.thanks %}
+  <div class="thanks">
+      <p>
+    Thanks to {{ page.thanks }} for reading a draft of this.
+    </p>
+  </div>
+  {% endif %}
+
   <div class="date">
-    Written on {{ page.date | date: "%B %e, %Y" }}
+    Published {{ page.date | date: "%B %e, %Y" }}
   </div>
 
   {% include disqus.html %}

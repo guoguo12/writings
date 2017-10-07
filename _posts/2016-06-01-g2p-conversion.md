@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Train Your Own Pronunciation Generator
+thanks: Korbinian Riedhammer
 ---
 
 How do you pronounce "brizzuoplatuong"?
@@ -216,7 +217,3 @@ If you're interested in how Sequitur works, check out "Joint-Sequence Models for
 <!--A more recent (2015) paper on G2P that is interesting to read is "Grapheme-to-Phoneme Conversion Using Long Short-Term Memory Recurrent Neural Networks" by Rao et al., available [here](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43264.pdf).-->
 
 <!--According to the paper, a ninth-order model (i.e. `model-9`) ought to achieve a string error rate of ~25% on CMUdict.-->
-
-<hr>
-
-Thanks to Korbinian Riedhammer for reading a draft of this.
