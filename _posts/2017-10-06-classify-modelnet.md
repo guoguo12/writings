@@ -5,7 +5,7 @@ title: Classifying 3D Shapes using Keras on FloydHub
 
 _(Note: I originally wrote this article in June 2017. At the time, FloydHub's introductory offer was 100 hours of free GPU time.
 I added FloydHub to the article so that people without access to GPUs could run the experiment.
-Since their new free tier only includes CPU time, you'll need to find access to a GPU on your own.)_
+But since their new free tier only includes CPU time, you'll now need to find access to a GPU on your own.)_
 
 In this tutorial, we'll train a 3D convolutional neural network (CNN) to classify CAD models of real-world objects.
 
