@@ -19,8 +19,6 @@ If you've never used it before, read ["30 seconds to Keras"](https://keras.io/#g
 
 When we finish our Keras code, we'll run it on FloydHub, an up-and-coming platform for running deep learning experiments in the cloud.
 
-<!-- more -->
-
 <!-- [right float box? - Surprise, it's a peephole connection! If you're *only* interested in FloydHub, download [the reference code and data](TODO) and skip to the "Training on FloydHub" section below.] -->
 
 ## About the data

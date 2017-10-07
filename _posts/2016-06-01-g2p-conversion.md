@@ -10,8 +10,6 @@ You've probably never heard anyone say "brizzuoplatuong" before, because I made 
 
 The technical name for this task is **grapheme-to-phoneme (G2P) conversion**&mdash;that is, translating from alphabetical characters (graphemes) to sounds (phonemes). A fully-trained G2P model can be thought of as a "pronunciation generator": text goes in, pronunciations come out.
 
-<!-- more -->
-
 In this post, we'll train our very own G2P model using [Sequitur](https://github.com/sequitur-g2p/sequitur-g2p). We'll then evaluate its performance on words it has never seen before, as well as words *nobody* has ever seen before.
 
 This is a beginner tutorial. The only prerequisite is competency with the command-line.

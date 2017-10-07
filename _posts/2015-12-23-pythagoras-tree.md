@@ -5,8 +5,6 @@ title: Drawing a Pythagoras Tree using Racket
 
 In this post, inspired by this week's [Daily JavaScript challenge](http://daily-javascript.com/challenges/pythagoras-tree/), I'll walk through how to use Racket's [turtle graphics library](http://docs.racket-lang.org/turtles/index.html) to draw a [Pythagoras tree](https://en.wikipedia.org/wiki/Pythagoras_tree_(fractal)). I'll assume basic familiarity with [Racket](http://racket-lang.org/), but not with turtle graphics.
 
-<!-- more -->
-
 Our final result will look like this:
 
 ![]({{ site.baseurl }}/images/pythagoras-tree-cropped.png)
