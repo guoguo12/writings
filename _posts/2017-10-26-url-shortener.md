@@ -73,6 +73,8 @@ g,http://google.com\r\nfb,http://facebook.com\r\ncs,http://cs61a.org
 We convert this into a dict, then get the URL corresponding to `short_name`.
 The result is passed to Flask's [`redirect`](http://flask.pocoo.org/docs/api/#flask.redirect), which ultimately redirects the user's browser the specified URL.
 
+And that's it! Find the full code on GitHub [here](https://github.com/guoguo12/gsheets-url-shortener).
+
 ## Bonus missions
 
 Some homework for the extra eager:
@@ -85,3 +87,5 @@ Then use Python's [`csv` module](https://docs.python.org/3/library/csv.html) to 
 * **Open sesame.** Our client would like to password-protect certain short URLs by specifying passwords in the spreadsheet. Implement this feature.
 * **We should have used Java.** Add [type hints](https://docs.python.org/3/library/typing.html) to the code.
 * **We should have used $language.** Rewrite the program in $language, unless $language is PHP.
+
+If you complete any of these, make a pull request to the GitHub repo linked above!
