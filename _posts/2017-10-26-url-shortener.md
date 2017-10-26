@@ -64,7 +64,7 @@ It didn't speak for itself? No worries, here's what's happening:
 Suppose I'm hosting my URL shortener at `example.com`.
 When a request to `example.com/fb` comes in, Flask accepts the request and calls our `handler` function with `short_name` bound to the string `fb`.
 
-`handler` then calls `url_for`, which downloads (using [Requests](http://docs.python-requests.org/en/master/)) our database spreadsheet in CSV format. It looks something like 
+`handler` then calls `url_for`, which downloads (using [Requests](http://docs.python-requests.org/en/master/)) our database spreadsheet in CSV format. It looks something like
 
 ```
 g,http://google.com\r\nfb,http://facebook.com\r\ncs,http://cs61a.org
@@ -73,7 +73,7 @@ g,http://google.com\r\nfb,http://facebook.com\r\ncs,http://cs61a.org
 We convert this into a dict, then get the URL corresponding to `short_name`.
 The result is passed to Flask's [`redirect`](http://flask.pocoo.org/docs/api/#flask.redirect), which ultimately redirects the user's browser the specified URL.
 
-And that's it! Find the full code on GitHub [here](https://github.com/guoguo12/gsheets-url-shortener).
+And that's it! Find the complete instructions and code on GitHub [here](https://github.com/guoguo12/gsheets-url-shortener).
 
 ## Bonus missions
 
