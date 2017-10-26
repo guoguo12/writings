@@ -3,7 +3,7 @@ layout: post
 title: A Concise URL Shortener in Python
 ---
 
-*How concise?* 19 lines.
+*How concise?* 14 lines.
 
 *How?* The main ideas:
 * Use Google Sheets as a database.
