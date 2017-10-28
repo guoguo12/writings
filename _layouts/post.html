@@ -20,7 +20,13 @@ layout: default
   {% endif %}
 
   <div class="date">
-    Published {{ page.date | date: "%B %e, %Y" }}
+    {% if page.modified %}
+        Published {{ page.date | date: "%B %e, %Y" }},
+        modified {{ page.modified | date: "%B %e, %Y" }}.
+    {% else %}
+        Published {{ page.date | date: "%B %e, %Y" }}.
+    {% endif %}
   </div>
+
 
 </article>
