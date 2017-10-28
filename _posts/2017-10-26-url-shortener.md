@@ -1,13 +1,14 @@
 ---
 layout: post
 title: A Concise URL Shortener in Python
+modified: 2017-10-28
 ---
 
 *How concise?* 14 lines.
 
 *How?* The main ideas:
 * Use Google Sheets as a database.
-* Use Flask for serving and routing.
+* Use [Flask](http://flask.pocoo.org) for serving and routing.
 
 ## Database setup
 
@@ -33,59 +34,51 @@ https://docs.google.com/spreadsheets/d/KEY/export?format=csv&id=KEY&gid=0
 
 (Don't forget to replace `KEY` with your spreadsheet's ID.)
 
-## Backend setup
+## Server setup
 
-The code speaks for itself:
+The server is responsible for converting short URLs into long URLs.
+
+Say your server is hosted at `ag.io`.
+When a user requests `ag.io/fb`, your server must extract the "path" part of the URL (which is just `fb`),
+look up the corresponding long URL in the database,
+then redirect the user to that URL.
+
+Using Flask, this looks like:
 
 ```python
 from flask import Flask, redirect
-import requests
-
-SHEET_ID = '1vr6C7CD_RMaNXmxFybG5H6GibrT1Vsx6Jm3sRQnQ2m2'
-DB_URL = 'https://docs.google.com/spreadsheets/d/{0}/export?format=csv&id={0}&gid=0'.format(SHEET_ID)
 
 app = Flask(__name__)
 
-def url_for(short_name):
-    csv = requests.get(DB_URL).text
-    mappings = dict(mapping.split(',') for mapping in csv.split('\r\n'))
-    return mappings[short_name]
-
-@app.route('/<short_name>')
-def handler(short_name):
-    return redirect(url_for(short_name))
+@app.route('/<path>')
+def handler(path):
+    # We must define look_up_long_url
+    return redirect(look_up_long_url(path))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
 ```
 
-It didn't speak for itself? No worries, here's what's happening:
+<!-- Note that we use Flask's [`redirect`](http://flask.pocoo.org/docs/api/#flask.redirect) to redirect the user's browser the long URL. -->
 
-Suppose I'm hosting my URL shortener at `example.com`.
-When a request to `example.com/fb` comes in, Flask accepts the request and calls our `handler` function with `short_name` bound to the string `fb`.
+How do we implement `look_up_long_url`? The steps required are:
 
-`handler` then calls `url_for`, which downloads (using [Requests](http://docs.python-requests.org/en/master/)) our database spreadsheet in CSV format. It looks something like
+1. Download the database (spreadsheet) using the trick above.
+2. Transform the data into a Python dict.
+3. Look up the short URL in the dict.
 
+In code (using [Requests](http://docs.python-requests.org/) to download the database):
+
+```python
+import requests
+
+SHEET_ID = '1vr6C7CD_RMaNXmxFybG5H6GibrT1Vsx6Jm3sRQnQ2m2'
+DB_URL = 'https://docs.google.com/spreadsheets/d/{0}/export?format=csv&id={0}&gid=0'.format(SHEET_ID)
+
+def look_up_long_url(path):
+    csv = requests.get(DB_URL).text
+    mappings = dict(mapping.split(',') for mapping in csv.split('\r\n'))
+    return mappings[path]
 ```
-g,http://google.com\r\nfb,http://facebook.com\r\ncs,http://cs61a.org
-```
 
-We convert this into a dict, then get the URL corresponding to `short_name`.
-The result is passed to Flask's [`redirect`](http://flask.pocoo.org/docs/api/#flask.redirect), which ultimately redirects the user's browser the specified URL.
-
-And that's it! Find the complete instructions and code on GitHub [here](https://github.com/guoguo12/gsheets-url-shortener).
-
-## Bonus missions
-
-Some homework for the extra eager:
-
-* **It's dangerous to roll your own.** Find a way to make the server crash while parsing the CSV.
-Then use Python's [`csv` module](https://docs.python.org/3/library/csv.html) to parse the database instead.
-* **Human-centered design.** When a user requests a short URL that isn't in the database, our server responds with an ugly "Internal Server Error" page. Handle this gracefully.
-* **Need for speed.** Cache database queries using [`functools.lru_cache`](https://docs.python.org/3/library/functools.html#functools.lru_cache). What are the advantages and disadvantages of this system? Write your response as a haiku.
-* **Count your blessings.** Our client (yep, we have a client now) would like to track how many times each short URL has been accessed. Implement this feature. (Bonus points for writing click-count data back to the spreadsheet.)
-* **Open sesame.** Our client would like to password-protect certain short URLs by specifying passwords in the spreadsheet. Implement this feature.
-* **We should have used Java.** Add [type hints](https://docs.python.org/3/library/typing.html) to the code.
-* **We should have used $language.** Rewrite the program in $language, unless $language is PHP.
-
-If you complete any of these, make a pull request to the GitHub repo linked above!
+And that's it! See [GitHub](https://github.com/guoguo12/gsheets-url-shortener) for the full code and instructions on setting up the server.
