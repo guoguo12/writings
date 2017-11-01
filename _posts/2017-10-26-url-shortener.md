@@ -73,7 +73,8 @@ In code (using [Requests](http://docs.python-requests.org/) to download the data
 import requests
 
 SHEET_ID = '1vr6C7CD_RMaNXmxFybG5H6GibrT1Vsx6Jm3sRQnQ2m2'
-DB_URL = 'https://docs.google.com/spreadsheets/d/{0}/export?format=csv&id={0}&gid=0'.format(SHEET_ID)
+DB_URL = ('https://docs.google.com/spreadsheets/d/{0}/export'
+          '?format=csv&id={0}&gid=0').format(SHEET_ID)
 
 def look_up_long_url(path):
     csv = requests.get(DB_URL).text
