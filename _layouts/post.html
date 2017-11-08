@@ -11,22 +11,29 @@ layout: default
 
   <hr style="margin-top: 20px; margin-bottom: 20px">
 
+  <div class="footer">
+    <p>
+      {% if page.modified %}
+          Published {{ page.date | date: "%B %e, %Y" }},
+          modified {{ page.modified | date: "%B %e, %Y" }}.
+      {% else %}
+          Published {{ page.date | date: "%B %e, %Y" }}.
+      {% endif %}
+    </p>
+  </div>
+
   {% if page.thanks %}
-  <div class="thanks">
-      <p>
+  <div class="footer">
+    <p>
     Thanks to {{ page.thanks }} for reading a draft of this.
     </p>
   </div>
   {% endif %}
 
-  <div class="date">
-    {% if page.modified %}
-        Published {{ page.date | date: "%B %e, %Y" }},
-        modified {{ page.modified | date: "%B %e, %Y" }}.
-    {% else %}
-        Published {{ page.date | date: "%B %e, %Y" }}.
-    {% endif %}
+  <div class="footer">
+    <p>
+    If you liked this, check out my <a href="{{ site.baseurl }}/">other works</a> or my <a href="http://aguo.us">homepage</a>.
+    </p>
   </div>
-
 
 </article>

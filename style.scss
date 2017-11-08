@@ -5,6 +5,8 @@
 // IMPORTS
 //
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+
 @import "reset";
 @import "variables";
 // Syntax highlighting @import is at the bottom of this file
@@ -18,8 +20,8 @@ html {
 }
 
 body {
-	background: $white;
-  font: 16px/1.4 $helvetica;
+  background: $white;
+  font: 15px/1.4 $roboto;
   color: $darkGray;
 }
 
@@ -31,7 +33,6 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $helveticaNeue;
   color: $darkerGray;
   font-weight: bold;
 
@@ -45,22 +46,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 30px;
   a {
     color: inherit;
   }
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 24px;
 }
 
 h3 {
-  font-size: 18px;
+  font-size: 20px;
 }
 
 h4 {
-  font-size: 16px;
+  font-size: 18px;
   color: $gray;
 }
 
@@ -69,11 +70,11 @@ p {
 }
 
 a {
-  color: $blue;
-  text-decoration: none;
-	cursor: pointer;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
   &:hover, &:active {
-    color: $blue;
+    color: inherit;
   }
 }
 
@@ -115,12 +116,7 @@ img {
   max-width: none;
 }
 
-.thanks {
-  color: $gray;
-}
-
-.date {
-  font-style: italic;
+.footer {
   color: $gray;
 }
 
@@ -198,7 +194,6 @@ img {
   margin: 0;
   color: $darkGray;
   cursor: pointer;
-  font-family: $helveticaNeue;
   font-weight: 300;
   font-size: 28px;
   letter-spacing: 1px;
@@ -217,7 +212,6 @@ img {
 nav {
   float: right;
   margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
   font-size: 18px;
 
   @include mobile {
@@ -282,6 +276,54 @@ nav {
 footer {
   padding: 20px 0;
   text-align: center;
+}
+
+//
+// Adapted from old site
+//
+
+.article-top {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  height: 400px;
+  margin-bottom: 50px;
+  background-color: #315C6C;
+  font-weight: bold;
+
+  div.header-text {
+    margin: 0px auto;
+    width: 50%;
+    padding-top: 20px;
+
+    a {
+      color: #FFF;
+      text-decoration: none;
+      font-size: 30px;
+    }
+
+    .header-right {
+      float: right;
+
+      a {
+        margin-left: 40px;
+        font-size: 24px;
+      }
+    }
+  }
+
+}
+
+@media (max-width: 767px) {
+  .hidden-xs {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .hidden-sm {
+    display: none !important;
+  }
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS

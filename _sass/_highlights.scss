@@ -9,7 +9,13 @@ div.highlighter-rouge {
 }
 
 code {
-  font-family:'Bitstream Vera Sans Mono','Courier', monospace;
+  font-family: 'Consolas', monospace;
+}
+
+p code {
+  color: #905;
+  background-color: #F2F2F2;
+  padding: 1px 3px;
 }
 
 .highlight { color: #586E75 }
