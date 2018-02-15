@@ -14,7 +14,7 @@ In this tutorial, we'll train a 3D convolutional neural network (CNN) to classif
 <!-- I'll assume basic familiarity with ML and neural nets.
 In particular, you should understand how regular 2D CNNs work - I recommend Stanford's [CS231n notes](https://cs231n.github.io/convolutional-networks/). -->
 
-We'll be implementing our neural network using [Keras](keras.io).
+We'll be implementing our neural network using [Keras](http://keras.io).
 If you've never used it before, read ["30 seconds to Keras"](https://keras.io/#getting-started-30-seconds-to-keras) first to get a feel for the syntax and style of the API.
 
 When we finish our Keras code, we'll run it on FloydHub, an up-and-coming platform for running deep learning experiments in the cloud.
